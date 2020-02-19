@@ -33,6 +33,7 @@ public class PlatformingEnemy : MonoBehaviour
 
 	Transform tf;
 	Rigidbody2D rb;
+	SpriteRenderer sprite;
 
 	Vector3 scale_initial;
 
@@ -44,12 +45,14 @@ public class PlatformingEnemy : MonoBehaviour
 		tf = GetComponent<Transform>();
 		rb = GetComponent<Rigidbody2D>();
 		scale_initial = GetComponent<Transform>().localScale;
+		sprite = tf.GetChild(0).GetComponent<SpriteRenderer>();
 		waypoint = FindClosestWaypoint(false);
 	}
 
     // Update is called once per frame
     void Update()
     {
+		sprite.color = new Color(Mathf.Min(255, sprite.color.r) + 10 * Time.deltaTime, Mathf.Min(255, sprite.color.g + 10 * Time.deltaTime), Mathf.Min(255, sprite.color.b + 10 * Time.deltaTime));
 		attack_timer += Time.deltaTime;
 
 		Vector2 waypoint_direction;
@@ -139,7 +142,7 @@ public class PlatformingEnemy : MonoBehaviour
 			}
 			else
 			{
-				rb.velocity = new Vector2(100 * move_force * move_direction * Time.deltaTime, rb.velocity.y);
+				rb.velocity = new Vector2(move_force * move_direction, rb.velocity.y);
 			}
 		}
 	}
@@ -239,6 +242,7 @@ public class PlatformingEnemy : MonoBehaviour
 	public void Damage(int damage, Vector2 direction, float amount)
 	{
 		hp -= damage;
+		sprite.color = new Color(255, 0, 0);
 		rb.velocity += (10 * amount * new Vector2(direction.x, 0)) + new Vector2(0, 1.0f);
 		if (hp <= 0)
 		{

@@ -30,6 +30,7 @@ public class PlatformingMovement : MonoBehaviour
 
 	Transform tf;
 	Rigidbody2D rb;
+	SpriteRenderer sprite;
 
 	Vector3 scale_initial;
 
@@ -39,11 +40,13 @@ public class PlatformingMovement : MonoBehaviour
 		tf = GetComponent<Transform>();
 		rb = GetComponent<Rigidbody2D>();
 		scale_initial = GetComponent<Transform>().localScale;
+		sprite = tf.GetChild(0).GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
+		sprite.color = new Color(Mathf.Min(255, sprite.color.r) + 10 * Time.deltaTime, Mathf.Min(255, sprite.color.g + 10 * Time.deltaTime), Mathf.Min(255, sprite.color.b + 10 * Time.deltaTime));
 		if (hp <= 0) { SceneManager.LoadScene(death_scene); }
 
 		GameObject.Find("Health").GetComponent<Text>().text = hp + " HP";
@@ -111,7 +114,7 @@ public class PlatformingMovement : MonoBehaviour
 		//Apply movement
 		if (hit_down.collider != null && Mathf.Abs(rb.velocity.magnitude) < max_velocity)
 		{
-			rb.velocity = new Vector2(100 * input_horizontal * move_force * Time.deltaTime, rb.velocity.y);
+			rb.velocity = new Vector2(input_horizontal * move_force, rb.velocity.y);
 		}
 		else
 		{
@@ -162,6 +165,7 @@ public class PlatformingMovement : MonoBehaviour
 		else
 		{
 			hp -= damage;
+			sprite.color = new Color(255, 0, 0);
 			rb.velocity += (10 * amount * new Vector2(direction.x, 0));
 		}
 	}
