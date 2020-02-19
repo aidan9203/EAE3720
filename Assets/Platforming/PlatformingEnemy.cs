@@ -83,7 +83,7 @@ public class PlatformingEnemy : MonoBehaviour
 		RaycastHit2D hit_down = Physics2D.Raycast(tf.position, Vector2.down, 0.6f, ~LayerMask.GetMask("Enemy"));
 
 		//Update direction
-		if (hit_down.collider != null)
+		if (hit_down.collider != null && (!player_engaged || Mathf.Abs(waypoint_direction.x) > waypoint_min_distance || Mathf.Abs(waypoint_direction.y) < waypoint_min_distance))
 		{
 			if (waypoint_direction.x >= 0) { Face(true); }
 			else { Face(false); }
@@ -92,21 +92,39 @@ public class PlatformingEnemy : MonoBehaviour
 		int move_direction = (facing_right ? 1 : -1);
 
 		//Detect collisions
-		RaycastHit2D hit_forward = Physics2D.Raycast(tf.position, move_direction * Vector2.right, 0.7f, ~LayerMask.GetMask("Enemy"));
+		RaycastHit2D hit_forward_upper = Physics2D.Raycast(tf.position + new Vector3(0, 0.4f, 0), move_direction * Vector2.right, 0.7f, ~LayerMask.GetMask("Enemy"));
+		RaycastHit2D hit_forward_lower = Physics2D.Raycast(tf.position + new Vector3(0, -0.4f, 0), move_direction * Vector2.right, 0.7f, ~LayerMask.GetMask("Enemy"));
 
 		//Obstacle in front of the enemy
-		if (hit_forward.collider != null)
+		if (hit_forward_upper.collider != null)
 		{
-			if (hit_forward.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
+			if (hit_forward_upper.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
 			{
 				//Attacking the player
 				if (attack_timer > attack_frequency)
 				{
 					attack_timer = 0;
-					hit_forward.collider.GetComponent<PlatformingMovement>().Damage(damage, (player.position - tf.position).normalized, knockback);
+					hit_forward_upper.collider.GetComponent<PlatformingMovement>().Damage(damage, (player.position - tf.position).normalized, knockback);
 				}
 			}
-			else if (hit_forward.collider.gameObject.layer == LayerMask.NameToLayer("Platform") && !jumped && hit_down.collider != null)
+			else if (!jumped && hit_down.collider != null)
+			{
+				rb.AddForce(new Vector2(0, jump_force * 100));
+				jumped = true;
+			}
+		}
+		else if (hit_forward_lower.collider != null)
+		{
+			if (hit_forward_lower.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
+			{
+				//Attacking the player
+				if (attack_timer > attack_frequency)
+				{
+					attack_timer = 0;
+					hit_forward_lower.collider.GetComponent<PlatformingMovement>().Damage(damage, (player.position - tf.position).normalized, knockback);
+				}
+			}
+			else if (!jumped && hit_down.collider != null)
 			{
 				rb.AddForce(new Vector2(0, jump_force * 100));
 				jumped = true;
@@ -115,7 +133,14 @@ public class PlatformingEnemy : MonoBehaviour
 		else
 		{
 			//Apply forward motion
-			rb.velocity = new Vector2(100 * move_force * move_direction * Time.deltaTime, rb.velocity.y);
+			if (Mathf.Abs(waypoint_direction.x) < waypoint_min_distance - 0.1f && Mathf.Abs(waypoint_direction.y) < waypoint_min_distance - 0.1f)
+			{
+				rb.velocity = Vector3.zero;
+			}
+			else
+			{
+				rb.velocity = new Vector2(100 * move_force * move_direction * Time.deltaTime, rb.velocity.y);
+			}
 		}
 	}
 

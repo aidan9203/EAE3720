@@ -55,7 +55,7 @@ MonoBehaviour:
   damage: 1
   knockback: 3
   attack_frequency: 0.5
-  block_frequency: 1
+  block_frequency: 0.8
   death_scene: TopDownTest
 --- !u!61 &4075026071822770740
 BoxCollider2D:
@@ -150,7 +150,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -231,7 +230,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

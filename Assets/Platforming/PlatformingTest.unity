@@ -264,6 +264,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6211110041054571055, guid: 97c43d3b46e33a14e86651f92a7dc234,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyPlatforming (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 6211110041054571043, guid: 97c43d3b46e33a14e86651f92a7dc234,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -339,11 +344,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 214120083}
-    - target: {fileID: 6211110041054571055, guid: 97c43d3b46e33a14e86651f92a7dc234,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyPlatforming (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 6211110042001837733, guid: 97c43d3b46e33a14e86651f92a7dc234,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -561,6 +561,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6211110041054571055, guid: 97c43d3b46e33a14e86651f92a7dc234,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyPlatforming (3)
+      objectReference: {fileID: 0}
     - target: {fileID: 6211110041054571043, guid: 97c43d3b46e33a14e86651f92a7dc234,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -641,11 +646,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 214120083}
-    - target: {fileID: 6211110041054571055, guid: 97c43d3b46e33a14e86651f92a7dc234,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyPlatforming (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 6211110042001837733, guid: 97c43d3b46e33a14e86651f92a7dc234,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -660,6 +660,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6211110041054571055, guid: 97c43d3b46e33a14e86651f92a7dc234,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyPlatforming (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 6211110041054571043, guid: 97c43d3b46e33a14e86651f92a7dc234,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -735,11 +740,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 214120083}
-    - target: {fileID: 6211110041054571055, guid: 97c43d3b46e33a14e86651f92a7dc234,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyPlatforming (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 6211110042001837733, guid: 97c43d3b46e33a14e86651f92a7dc234,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -1338,6 +1338,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 26
@@ -1718,6 +1720,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6211110041054571055, guid: 97c43d3b46e33a14e86651f92a7dc234,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyPlatforming Boss
+      objectReference: {fileID: 0}
     - target: {fileID: 6211110041054571043, guid: 97c43d3b46e33a14e86651f92a7dc234,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1803,11 +1810,6 @@ PrefabInstance:
       propertyPath: death_scene
       value: TurnBasedTest
       objectReference: {fileID: 0}
-    - target: {fileID: 6211110041054571055, guid: 97c43d3b46e33a14e86651f92a7dc234,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyPlatforming Boss
-      objectReference: {fileID: 0}
     - target: {fileID: 6211110042001837733, guid: 97c43d3b46e33a14e86651f92a7dc234,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -1822,6 +1824,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6211110041054571055, guid: 97c43d3b46e33a14e86651f92a7dc234,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyPlatforming (5)
+      objectReference: {fileID: 0}
     - target: {fileID: 6211110041054571043, guid: 97c43d3b46e33a14e86651f92a7dc234,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1897,11 +1904,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 214120083}
-    - target: {fileID: 6211110041054571055, guid: 97c43d3b46e33a14e86651f92a7dc234,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyPlatforming (5)
-      objectReference: {fileID: 0}
     - target: {fileID: 6211110042001837733, guid: 97c43d3b46e33a14e86651f92a7dc234,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y

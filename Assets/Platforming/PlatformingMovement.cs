@@ -49,7 +49,7 @@ public class PlatformingMovement : MonoBehaviour
 		GameObject.Find("Health").GetComponent<Text>().text = hp + " HP";
 		attack_timer += Time.deltaTime;
 		block_timer += Time.deltaTime;
-		if (block_timer > 0.8f * block_frequency && attack_timer > attack_frequency / 2.0f) { sword.transform.localEulerAngles = new Vector3(0, 0, 45); }
+		if (block_timer > 0.75f * block_frequency && attack_timer > attack_frequency / 2.0f) { sword.transform.localEulerAngles = new Vector3(0, 0, 45); }
 
 		//Read inputs
 		float input_horizontal = Input.GetAxisRaw("Horizontal");
@@ -57,7 +57,7 @@ public class PlatformingMovement : MonoBehaviour
 		if (jumped && input_jump <= 0) { jumped = false; }
 
 		//Detect floors and walls
-		RaycastHit2D hit_down = Physics2D.Raycast(tf.position, Vector2.down, 0.6f, ~LayerMask.GetMask("Player"));
+		RaycastHit2D hit_down = Physics2D.Raycast(tf.position, Vector2.down, 0.7f, ~LayerMask.GetMask("Player"));
 		RaycastHit2D hit_left_upper = Physics2D.Raycast(tf.position + new Vector3(0, 0.4f, 0), Vector2.left, 0.7f, ~LayerMask.GetMask("Player"));
 		RaycastHit2D hit_right_upper = Physics2D.Raycast(tf.position + new Vector3(0, 0.4f, 0), Vector2.right, 0.7f, ~LayerMask.GetMask("Player"));
 		RaycastHit2D hit_left_lower = Physics2D.Raycast(tf.position + new Vector3(0, -0.4f, 0), Vector2.left, 0.7f, ~LayerMask.GetMask("Player"));
@@ -79,21 +79,27 @@ public class PlatformingMovement : MonoBehaviour
 		{
 			attack_timer = 0;
 			sword.transform.localEulerAngles = new Vector3(0, 0, 75);
-			if (facing_right && hit_right_upper.collider != null && hit_right_upper.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+			if (facing_right)
 			{
-				hit_right_upper.collider.GetComponent<PlatformingEnemy>().Damage(damage, (hit_right_upper.collider.GetComponent<Transform>().position - tf.position).normalized, knockback);
+				if (hit_right_upper.collider != null && hit_right_upper.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+				{
+					hit_right_upper.collider.GetComponent<PlatformingEnemy>().Damage(damage, (hit_right_upper.collider.GetComponent<Transform>().position - tf.position).normalized, knockback);
+				}
+				else if (hit_right_lower.collider != null && hit_right_lower.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+				{
+					hit_right_lower.collider.GetComponent<PlatformingEnemy>().Damage(damage, (hit_right_lower.collider.GetComponent<Transform>().position - tf.position).normalized, knockback);
+				}
 			}
-			else if (facing_right && hit_right_lower.collider != null && hit_right_lower.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+			else
 			{
-				hit_right_lower.collider.GetComponent<PlatformingEnemy>().Damage(damage, (hit_right_lower.collider.GetComponent<Transform>().position - tf.position).normalized, knockback);
-			}
-			else if (!facing_right && hit_left_upper.collider != null && hit_left_upper.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-			{
-				hit_left_upper.collider.GetComponent<PlatformingEnemy>().Damage(damage, (hit_left_upper.collider.GetComponent<Transform>().position - tf.position).normalized, knockback);
-			}
-			else if (!facing_right && hit_left_lower.collider != null && hit_left_lower.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-			{
-				hit_left_lower.collider.GetComponent<PlatformingEnemy>().Damage(damage, (hit_left_lower.collider.GetComponent<Transform>().position - tf.position).normalized, knockback);
+				if (hit_left_upper.collider != null && hit_left_upper.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+				{
+					hit_left_upper.collider.GetComponent<PlatformingEnemy>().Damage(damage, (hit_left_upper.collider.GetComponent<Transform>().position - tf.position).normalized, knockback);
+				}
+				else if (hit_left_lower.collider != null && hit_left_lower.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+				{
+					hit_left_lower.collider.GetComponent<PlatformingEnemy>().Damage(damage, (hit_left_lower.collider.GetComponent<Transform>().position - tf.position).normalized, knockback);
+				}
 			}
 		}
 		else if (Input.GetAxisRaw("Attack/Block") < 0 && block_timer > block_frequency && attack_timer > attack_frequency)
@@ -121,19 +127,11 @@ public class PlatformingMovement : MonoBehaviour
 			{
 				rb.AddForce(new Vector2(0, jump_force * 100));
 			}
-			else if (hit_right_upper.collider != null && hit_right_upper.collider == null)
+			else if (hit_right_upper.collider != null || hit_right_lower.collider != null)
 			{
 				rb.AddForce(new Vector2(-jump_force * 40, jump_force * 60));
 			}
-			else if (hit_right_lower.collider != null && hit_right_lower.collider == null)
-			{
-				rb.AddForce(new Vector2(-jump_force * 40, jump_force * 60));
-			}
-			else if (hit_left_upper.collider != null && hit_left_upper.collider == null)
-			{
-				rb.AddForce(new Vector2(jump_force * 40, jump_force * 60));
-			}
-			else if (hit_left_lower.collider != null && hit_left_lower.collider == null)
+			else if (hit_left_upper.collider != null || hit_left_lower.collider != null)
 			{
 				rb.AddForce(new Vector2(jump_force * 40, jump_force * 60));
 			}
@@ -157,7 +155,7 @@ public class PlatformingMovement : MonoBehaviour
 
 	public void Damage(int damage, Vector2 direction, float amount)
 	{
-		if (block_timer < 0.8f * block_frequency && ((direction.x < 0 && facing_right) || (direction.x > 0 && !facing_right)))
+		if (block_timer < 0.75f * block_frequency && ((direction.x < 0 && facing_right) || (direction.x > 0 && !facing_right)))
 		{
 			rb.velocity += (3 * amount * new Vector2(direction.x, 0));
 		}
