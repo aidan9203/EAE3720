@@ -41,8 +41,8 @@ InputManager:
     m_Name: Attack/Block
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: r
-    positiveButton: f
+    negativeButton: mouse 1
+    positiveButton: mouse 0
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
@@ -92,7 +92,7 @@ InputManager:
     negativeButton: 
     positiveButton: space
     altNegativeButton: 
-    altPositiveButton: 
+    altPositiveButton: w
     gravity: 1000
     dead: 0.001
     sensitivity: 1000

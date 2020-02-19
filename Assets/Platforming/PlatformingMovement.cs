@@ -58,15 +58,18 @@ public class PlatformingMovement : MonoBehaviour
 
 		//Detect floors and walls
 		RaycastHit2D hit_down = Physics2D.Raycast(tf.position, Vector2.down, 0.6f, ~LayerMask.GetMask("Player"));
-		RaycastHit2D hit_left = Physics2D.Raycast(tf.position, Vector2.left, 0.7f, ~LayerMask.GetMask("Player"));
-		RaycastHit2D hit_right = Physics2D.Raycast(tf.position, Vector2.right, 0.7f, ~LayerMask.GetMask("Player"));
+		RaycastHit2D hit_left_upper = Physics2D.Raycast(tf.position + new Vector3(0, 0.4f, 0), Vector2.left, 0.7f, ~LayerMask.GetMask("Player"));
+		RaycastHit2D hit_right_upper = Physics2D.Raycast(tf.position + new Vector3(0, 0.4f, 0), Vector2.right, 0.7f, ~LayerMask.GetMask("Player"));
+		RaycastHit2D hit_left_lower = Physics2D.Raycast(tf.position + new Vector3(0, -0.4f, 0), Vector2.left, 0.7f, ~LayerMask.GetMask("Player"));
+		RaycastHit2D hit_right_lower = Physics2D.Raycast(tf.position + new Vector3(0, -0.4f, 0), Vector2.right, 0.7f, ~LayerMask.GetMask("Player"));
 
 		//Change player direction
-		if (facing_right && input_horizontal < 0)
+		float mouse_dir = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - (tf.position.x);
+		if (facing_right && mouse_dir < 0)
 		{
 			Face(false);
 		}
-		else if (!facing_right && input_horizontal > 0)
+		else if (!facing_right && mouse_dir > 0)
 		{
 			Face(true);
 		}
@@ -76,13 +79,21 @@ public class PlatformingMovement : MonoBehaviour
 		{
 			attack_timer = 0;
 			sword.transform.localEulerAngles = new Vector3(0, 0, 75);
-			if (facing_right && hit_right.collider != null && hit_right.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+			if (facing_right && hit_right_upper.collider != null && hit_right_upper.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
 			{
-				hit_right.collider.GetComponent<PlatformingEnemy>().Damage(damage, (hit_right.collider.GetComponent<Transform>().position - tf.position).normalized, knockback);
+				hit_right_upper.collider.GetComponent<PlatformingEnemy>().Damage(damage, (hit_right_upper.collider.GetComponent<Transform>().position - tf.position).normalized, knockback);
 			}
-			else if (!facing_right && hit_left.collider != null && hit_left.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+			else if (facing_right && hit_right_lower.collider != null && hit_right_lower.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
 			{
-				hit_left.collider.GetComponent<PlatformingEnemy>().Damage(damage, (hit_left.collider.GetComponent<Transform>().position - tf.position).normalized, knockback);
+				hit_right_lower.collider.GetComponent<PlatformingEnemy>().Damage(damage, (hit_right_lower.collider.GetComponent<Transform>().position - tf.position).normalized, knockback);
+			}
+			else if (!facing_right && hit_left_upper.collider != null && hit_left_upper.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+			{
+				hit_left_upper.collider.GetComponent<PlatformingEnemy>().Damage(damage, (hit_left_upper.collider.GetComponent<Transform>().position - tf.position).normalized, knockback);
+			}
+			else if (!facing_right && hit_left_lower.collider != null && hit_left_lower.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+			{
+				hit_left_lower.collider.GetComponent<PlatformingEnemy>().Damage(damage, (hit_left_lower.collider.GetComponent<Transform>().position - tf.position).normalized, knockback);
 			}
 		}
 		else if (Input.GetAxisRaw("Attack/Block") < 0 && block_timer > block_frequency && attack_timer > attack_frequency)
@@ -110,15 +121,21 @@ public class PlatformingMovement : MonoBehaviour
 			{
 				rb.AddForce(new Vector2(0, jump_force * 100));
 			}
-			else if (hit_right.collider != null && hit_left.collider == null)
+			else if (hit_right_upper.collider != null && hit_right_upper.collider == null)
 			{
 				rb.AddForce(new Vector2(-jump_force * 40, jump_force * 60));
-				Face(false);
 			}
-			else if (hit_left.collider != null && hit_right.collider == null)
+			else if (hit_right_lower.collider != null && hit_right_lower.collider == null)
+			{
+				rb.AddForce(new Vector2(-jump_force * 40, jump_force * 60));
+			}
+			else if (hit_left_upper.collider != null && hit_left_upper.collider == null)
 			{
 				rb.AddForce(new Vector2(jump_force * 40, jump_force * 60));
-				Face(true);
+			}
+			else if (hit_left_lower.collider != null && hit_left_lower.collider == null)
+			{
+				rb.AddForce(new Vector2(jump_force * 40, jump_force * 60));
 			}
 		}
 	}
