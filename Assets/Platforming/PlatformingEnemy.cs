@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlatformingEnemy : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class PlatformingEnemy : MonoBehaviour
 	Rigidbody2D rb;
 
 	Vector3 scale_initial;
+
+	public string death_scene = "";
 
 	// Start is called before the first frame update
 	void Start()
@@ -212,6 +215,10 @@ public class PlatformingEnemy : MonoBehaviour
 	{
 		hp -= damage;
 		rb.velocity += (10 * amount * new Vector2(direction.x, 0)) + new Vector2(0, 1.0f);
-		if (hp <= 0) { GameObject.Destroy(this.gameObject); }
+		if (hp <= 0)
+		{
+			if (death_scene != "") { SceneManager.LoadScene(death_scene); }
+			GameObject.Destroy(this.gameObject);
+		}
 	}
 }
