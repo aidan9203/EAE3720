@@ -51,6 +51,7 @@ MonoBehaviour:
   move_force_air: 0.1
   max_velocity: 3
   sword: {fileID: 5222289469035417243}
+  max_hp: 5
   hp: 5
   damage: 1
   knockback: 3

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PlatformingMovement : MonoBehaviour
@@ -13,6 +12,7 @@ public class PlatformingMovement : MonoBehaviour
 
 	public GameObject sword;
 
+	public int max_hp;
     public int hp;
 	public int damage;
 	public float knockback;
@@ -34,14 +34,28 @@ public class PlatformingMovement : MonoBehaviour
 
 	Vector3 scale_initial;
 
-    // Start is called before the first frame update
-    void Start()
+	const float health_size = 0.03f;
+	Texture2D health_texture;
+	GUIStyle health_style;
+	Texture2D health_background_texture;
+	GUIStyle health_background_style;
+
+	// Start is called before the first frame update
+	void Start()
     {
 		tf = GetComponent<Transform>();
 		rb = GetComponent<Rigidbody2D>();
 		scale_initial = GetComponent<Transform>().localScale;
 		sprite = tf.GetChild(0).GetComponent<SpriteRenderer>();
-    }
+
+		health_texture = new Texture2D(1, 1);
+		health_style = new GUIStyle();
+		health_background_texture = new Texture2D(1, 1);
+		health_background_style = new GUIStyle();
+		health_background_texture.SetPixel(0, 0, Color.black);
+		health_background_texture.Apply();
+		health_background_style.normal.background = health_background_texture;
+	}
 
     // Update is called once per frame
     void Update()
@@ -49,7 +63,6 @@ public class PlatformingMovement : MonoBehaviour
 		sprite.color = new Color(Mathf.Min(255, sprite.color.r) + 10 * Time.deltaTime, Mathf.Min(255, sprite.color.g + 10 * Time.deltaTime), Mathf.Min(255, sprite.color.b + 10 * Time.deltaTime));
 		if (hp <= 0) { SceneManager.LoadScene(death_scene); }
 
-		GameObject.Find("Health").GetComponent<Text>().text = hp + " HP";
 		attack_timer += Time.deltaTime;
 		block_timer += Time.deltaTime;
 		if (block_timer > 0.75f * block_frequency && attack_timer > attack_frequency / 2.0f) { sword.transform.localEulerAngles = new Vector3(0, 0, 45); }
@@ -140,6 +153,20 @@ public class PlatformingMovement : MonoBehaviour
 			}
 		}
 	}
+
+
+	public void OnGUI()
+	{
+		Color color = Color.green;
+		if (hp <= max_hp / 4.0f) { color = Color.red; }
+		else if (hp <= max_hp / 2.0f) { color = Color.yellow; }
+		health_texture.SetPixel(0, 0, color);
+		health_texture.Apply();
+		health_style.normal.background = health_texture;
+		GUI.Box(new Rect(Screen.width * 0.02f, Screen.height * 0.03f, Screen.width * health_size * max_hp, Screen.height * health_size), GUIContent.none, health_background_style);
+		GUI.Box(new Rect(Screen.width * 0.05f, Screen.height * 0.05f, Screen.width * health_size * hp, Screen.height * health_size), GUIContent.none, health_style);
+	}
+
 
 	private void Face(bool right)
 	{
