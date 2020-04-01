@@ -69,7 +69,11 @@ public class PlatformingMovement : MonoBehaviour
     void Update()
     {
 		sprite.color = new Color(Mathf.Min(255, sprite.color.r) + 10 * Time.deltaTime, Mathf.Min(255, sprite.color.g + 10 * Time.deltaTime), Mathf.Min(255, sprite.color.b + 10 * Time.deltaTime));
-		if (hp <= 0) { SceneManager.LoadScene(death_scene); }
+		if (hp <= 0)
+		{
+			Controller.died = true;
+			SceneManager.LoadScene(death_scene);
+		}
 
 		attack_timer += Time.deltaTime;
 		block_timer += Time.deltaTime;
@@ -184,8 +188,8 @@ public class PlatformingMovement : MonoBehaviour
 	public void OnGUI()
 	{
 		Color color = Color.green;
-		if (hp <= max_hp / 4.0f) { color = Color.red; }
-		else if (hp <= max_hp / 2.0f) { color = Color.yellow; }
+		if (hp <= max_hp * 0.4f) { color = Color.red; }
+		else if (hp <= max_hp * 0.7f) { color = Color.yellow; }
 		health_texture.SetPixel(0, 0, color);
 		health_texture.Apply();
 		health_style.normal.background = health_texture;
@@ -223,9 +227,9 @@ public class PlatformingMovement : MonoBehaviour
 		}
 	}
 
-	public void OnCollisionEnter(Collision collision)
+	public void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.collider.tag == "Sword")
+		if (collision.tag == "Sword")
 		{
 			sword_enabled = true;
 			GameObject.Destroy(collision.gameObject);

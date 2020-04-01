@@ -21,11 +21,9 @@ public class ChangeLevel : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Changing level");
         if (collision.gameObject.tag == "Player")
         {
-            GameObject.Destroy(this);
-            SceneManager.LoadScene(scene);
+            GameObject.Find("Controller").GetComponent<Controller>().LoadLevel(this.gameObject, scene);
         }
     }
 }

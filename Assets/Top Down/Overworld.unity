@@ -1100,7 +1100,7 @@ GameObject:
   - component: {fileID: 168185045}
   - component: {fileID: 168185048}
   m_Layer: 0
-  m_Name: Sword (2)
+  m_Name: Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2894,6 +2894,7 @@ GameObject:
   - component: {fileID: 429824254}
   - component: {fileID: 429824253}
   - component: {fileID: 429824252}
+  - component: {fileID: 429824255}
   m_Layer: 0
   m_Name: Syringe
   m_TagString: Untagged
@@ -2980,6 +2981,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
+--- !u!114 &429824255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429824251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3e84eb0701d05f41ba2cd88eb597089, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scene: Platforming2
 --- !u!1001 &443528110
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5800,6 +5814,49 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3dbec432726dd5458afd8adec8f1d2a, type: 3}
+--- !u!1 &786621162
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 786621164}
+  - component: {fileID: 786621163}
+  m_Layer: 0
+  m_Name: Controller
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &786621163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786621162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11356262f6dc2dd41af5b038c54807fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &786621164
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786621162}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &793428248
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7184,17 +7241,17 @@ PrefabInstance:
     - target: {fileID: 889487320872766718, guid: 2a8dadcebdaa73b458d407d1e4526686,
         type: 3}
       propertyPath: m_Name
-      value: TopDownPlayer
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 889487320872766719, guid: 2a8dadcebdaa73b458d407d1e4526686,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.75
+      value: 3.25
       objectReference: {fileID: 0}
     - target: {fileID: 889487320872766719, guid: 2a8dadcebdaa73b458d407d1e4526686,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 889487320872766719, guid: 2a8dadcebdaa73b458d407d1e4526686,
         type: 3}
@@ -8424,6 +8481,7 @@ GameObject:
   - component: {fileID: 1167921613}
   - component: {fileID: 1167921612}
   - component: {fileID: 1167921610}
+  - component: {fileID: 1167921611}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -8447,6 +8505,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.25
+--- !u!114 &1167921611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167921609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3e84eb0701d05f41ba2cd88eb597089, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scene: Platforming1
 --- !u!212 &1167921612
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10014,6 +10085,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 694364048}
+  offset: 0
 --- !u!81 &1379595297
 AudioListener:
   m_ObjectHideFlags: 0

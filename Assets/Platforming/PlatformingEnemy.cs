@@ -29,7 +29,7 @@ public class PlatformingEnemy : MonoBehaviour
 	bool facing_right = true;
 	bool jumped = false;
 
-	float waypoint_min_distance = 0.5f;
+	float waypoint_min_distance = 0.8f;
 
 	Transform tf;
 	Rigidbody2D rb;
@@ -42,6 +42,8 @@ public class PlatformingEnemy : MonoBehaviour
 	Vector3 scale_initial;
 
 	public string death_scene = "";
+
+	public GameObject death_prefab;
 
 	// Start is called before the first frame update
 	void Start()
@@ -269,6 +271,9 @@ public class PlatformingEnemy : MonoBehaviour
 		if (hp <= 0)
 		{
 			if (death_scene != "") { SceneManager.LoadScene(death_scene); }
+			GameObject body = GameObject.Instantiate(death_prefab);
+			body.transform.position = transform.position;
+			body.transform.localScale = transform.localScale;
 			GameObject.Destroy(this.gameObject);
 		}
 	}
