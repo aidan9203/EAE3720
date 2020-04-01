@@ -24,7 +24,7 @@ public class ChangeLevel : MonoBehaviour
         Debug.Log("Changing level");
         if (collision.gameObject.tag == "Player")
         {
-           
+            GameObject.Destroy(this);
             SceneManager.LoadScene(scene);
         }
     }

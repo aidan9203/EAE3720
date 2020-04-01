@@ -35,6 +35,10 @@ public class PlatformingEnemy : MonoBehaviour
 	Rigidbody2D rb;
 	SpriteRenderer sprite;
 
+	public Sprite[] sprites = new Sprite[4];
+	int frame = 0;
+	float frame_timer = 0;
+
 	Vector3 scale_initial;
 
 	public string death_scene = "";
@@ -145,6 +149,24 @@ public class PlatformingEnemy : MonoBehaviour
 				rb.velocity = new Vector2(move_force * move_direction, rb.velocity.y);
 			}
 		}
+
+
+		//Animation
+		frame_timer += Time.deltaTime;
+		if (Mathf.Abs(rb.velocity.x) > 0.1f)
+		{
+			if (frame_timer > 0.3f / Mathf.Abs(rb.velocity.x))
+			{
+				frame_timer = 0;
+				frame = (frame + 1) % 4;
+			}
+		}
+		else
+		{
+			if (frame == 1) { frame = 2; }
+			else if (frame == 3) { frame = 0; }
+		}
+		sprite.sprite = sprites[frame];
 	}
 
 

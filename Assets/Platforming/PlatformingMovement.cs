@@ -32,6 +32,10 @@ public class PlatformingMovement : MonoBehaviour
 	Rigidbody2D rb;
 	SpriteRenderer sprite;
 
+	public Sprite[] sprites = new Sprite[4];
+	int frame = 0;
+	float frame_timer = 0;
+
 	Vector3 scale_initial;
 
 	const float health_size = 0.03f;
@@ -40,9 +44,13 @@ public class PlatformingMovement : MonoBehaviour
 	Texture2D health_background_texture;
 	GUIStyle health_background_style;
 
+	public bool sword_enabled;
+
 	// Start is called before the first frame update
 	void Start()
     {
+		transform.GetChild(0).GetChild(0).gameObject.SetActive(sword_enabled);
+
 		tf = GetComponent<Transform>();
 		rb = GetComponent<Rigidbody2D>();
 		scale_initial = GetComponent<Transform>().localScale;
@@ -91,7 +99,7 @@ public class PlatformingMovement : MonoBehaviour
 		}
 
 		//Attacking
-		if (Input.GetAxisRaw("Attack/Block") > 0 && attack_timer > attack_frequency && block_timer > block_frequency)
+		if (sword_enabled && Input.GetAxisRaw("Attack/Block") > 0 && attack_timer > attack_frequency && block_timer > block_frequency)
 		{
 			attack_timer = 0;
 			sword.transform.localEulerAngles = new Vector3(0, 0, 75);
@@ -118,7 +126,7 @@ public class PlatformingMovement : MonoBehaviour
 				}
 			}
 		}
-		else if (Input.GetAxisRaw("Attack/Block") < 0 && block_timer > block_frequency && attack_timer > attack_frequency)
+		else if (sword_enabled && Input.GetAxisRaw("Attack/Block") < 0 && block_timer > block_frequency && attack_timer > attack_frequency)
 		{
 			block_timer = 0;
 			sword.transform.localEulerAngles = new Vector3(0, 0, 15);
@@ -152,6 +160,24 @@ public class PlatformingMovement : MonoBehaviour
 				rb.AddForce(new Vector2(jump_force * 40, jump_force * 60));
 			}
 		}
+
+
+		//Animation
+		frame_timer += Time.deltaTime;
+		if (Mathf.Abs(rb.velocity.x) > 0.1f)
+		{
+			if (frame_timer > 0.3f / Mathf.Abs(rb.velocity.x))
+			{
+				frame_timer = 0;
+				frame = (frame + 1) % 4;
+			}
+		}
+		else
+		{
+			if (frame == 1) { frame = 2; }
+			else if (frame == 3) { frame = 0; }
+		}
+		sprite.sprite = sprites[frame];
 	}
 
 
@@ -164,7 +190,7 @@ public class PlatformingMovement : MonoBehaviour
 		health_texture.Apply();
 		health_style.normal.background = health_texture;
 		GUI.Box(new Rect(Screen.width * 0.02f, Screen.height * 0.03f, Screen.width * health_size * max_hp, Screen.height * health_size), GUIContent.none, health_background_style);
-		GUI.Box(new Rect(Screen.width * 0.05f, Screen.height * 0.05f, Screen.width * health_size * hp, Screen.height * health_size), GUIContent.none, health_style);
+		GUI.Box(new Rect(Screen.width * 0.02f, Screen.height * 0.03f, Screen.width * health_size * hp, Screen.height * health_size), GUIContent.none, health_style);
 	}
 
 
@@ -185,7 +211,7 @@ public class PlatformingMovement : MonoBehaviour
 
 	public void Damage(int damage, Vector2 direction, float amount)
 	{
-		if (block_timer < 0.75f * block_frequency && ((direction.x < 0 && facing_right) || (direction.x > 0 && !facing_right)))
+		if (sword_enabled && block_timer < 0.75f * block_frequency && ((direction.x < 0 && facing_right) || (direction.x > 0 && !facing_right)))
 		{
 			rb.velocity += (3 * amount * new Vector2(direction.x, 0));
 		}
@@ -194,6 +220,16 @@ public class PlatformingMovement : MonoBehaviour
 			hp -= damage;
 			sprite.color = new Color(255, 0, 0);
 			rb.velocity += (10 * amount * new Vector2(direction.x, 0));
+		}
+	}
+
+	public void OnCollisionEnter(Collision collision)
+	{
+		if (collision.collider.tag == "Sword")
+		{
+			sword_enabled = true;
+			GameObject.Destroy(collision.gameObject);
+			transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
 		}
 	}
 }
