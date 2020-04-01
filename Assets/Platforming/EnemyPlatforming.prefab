@@ -114,6 +114,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b0cfefdba68c74d4d9f51bcbeed124ef, type: 3}
   - {fileID: 21300000, guid: 11d5c8347b5c9b04290e1f73ee64b45c, type: 3}
   death_scene: 
+  death_prefab: {fileID: 5461936410793145343, guid: bb2cab7aae891dd4aa940e8634cd58ce,
+    type: 3}
 --- !u!1 &6211110042001837730
 GameObject:
   m_ObjectHideFlags: 0

@@ -39,17 +39,23 @@ public class Controller : MonoBehaviour
                 GameObject.Find("Player").transform.position = startPos;
                 lastPos = startPos;
                 died = false;
-                foreach(string o in objects)
+                foreach (string o in objects)
                 {
-                    GameObject.Find(o).SetActive(true);
+                    GameObject.Find(o).SetActive(false);
                 }
+                GameObject.Find(lastObject).SetActive(true);
+                lastObject = "";
             }
             else
             {
                 GameObject.Find("Player").transform.position = lastPos;
-                GameObject.Find(lastObject).SetActive(false);
                 objects.Add(lastObject);
                 lastObject = "";
+                foreach (string o in objects)
+                {
+                    GameObject.Find(o).SetActive(false);
+                }
+                startPos = lastPos;
             }
         }
     }
@@ -58,6 +64,7 @@ public class Controller : MonoBehaviour
     {
         lastPos = GameObject.Find("Player").transform.position;
         lastObject = trigger.name;
+        GameObject.Find(lastObject).SetActive(false);
         SceneManager.LoadScene(name);
     }
 }
