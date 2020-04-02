@@ -59,10 +59,10 @@ MonoBehaviour:
   block_frequency: 0.8
   death_scene: Overworld
   sprites:
-  - {fileID: 21300000, guid: e320cc720f22bb646bcd091b37b73e07, type: 3}
-  - {fileID: 21300000, guid: 397ac6d3c6e79194cb00bd9ab47005a8, type: 3}
-  - {fileID: 21300000, guid: 6fb0476eef7029c429476535ab0443ea, type: 3}
-  - {fileID: 21300000, guid: 7b9d9cf885ffe5f48a454d6ca0a3d69f, type: 3}
+  - {fileID: 21300000, guid: 63c1128e77ad2ff4191c47a12c07eaea, type: 3}
+  - {fileID: 21300000, guid: 3e6cda37fdffd53419e70cad4c506f5f, type: 3}
+  - {fileID: 21300000, guid: c78ec7493a9f73b4d8e202ed35eb5205, type: 3}
+  - {fileID: 21300000, guid: 9a72eb6f9b1df544fbdea06d6e76b8b8, type: 3}
   sword_enabled: 0
 --- !u!61 &4075026071822770740
 BoxCollider2D:
@@ -181,12 +181,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e320cc720f22bb646bcd091b37b73e07, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 63c1128e77ad2ff4191c47a12c07eaea, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.32, y: 0.32}
+  m_Size: {x: 1.28, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -266,7 +266,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.32, y: 0.32}
+  m_Size: {x: 1.28, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
