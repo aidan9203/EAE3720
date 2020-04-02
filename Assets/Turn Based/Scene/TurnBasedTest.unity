@@ -96,7 +96,6 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
-    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -758,6 +757,7 @@ GameObject:
   - component: {fileID: 180364191}
   - component: {fileID: 180364190}
   - component: {fileID: 180364189}
+  - component: {fileID: 180364192}
   m_Layer: 5
   m_Name: ShootButton
   m_TagString: Untagged
@@ -908,6 +908,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 180364187}
   m_CullTransparentMesh: 0
+--- !u!114 &180364192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180364187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd95d3e3ac1658e40ab9d7867f010c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonTL: {fileID: 1855859356}
+  buttonTR: {fileID: 1983075095}
+  buttonBL: {fileID: 0}
+  buttonBR: {fileID: 0}
 --- !u!1 &255897610
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,7 +1065,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281909280
+    rgba: 4281843743
   m_fontColor: {r: 0.12459949, g: 0.754717, b: 0.21798262, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2225,6 +2241,7 @@ GameObject:
   - component: {fileID: 636123353}
   - component: {fileID: 636123352}
   - component: {fileID: 636123351}
+  - component: {fileID: 636123354}
   m_Layer: 5
   m_Name: ItemsButton
   m_TagString: Untagged
@@ -2375,6 +2392,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 636123349}
   m_CullTransparentMesh: 0
+--- !u!114 &636123354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636123349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd95d3e3ac1658e40ab9d7867f010c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonTL: {fileID: 1456642400}
+  buttonTR: {fileID: 0}
+  buttonBL: {fileID: 0}
+  buttonBR: {fileID: 0}
 --- !u!1 &705808014
 GameObject:
   m_ObjectHideFlags: 0
@@ -2579,6 +2612,10 @@ MonoBehaviour:
   ammoCountText: {fileID: 394200826}
   grenadeCountText: {fileID: 2068802630}
   healthCounter: {fileID: 904374897}
+  button1: {fileID: 2092424525}
+  button2: {fileID: 180364189}
+  button3: {fileID: 636123351}
+  button4: {fileID: 1891471621}
   initialHealth: 300
   enemy: {fileID: 1315527974}
 --- !u!1 &867792554
@@ -2642,9 +2679,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
-    m_HighlightedColor: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
-    m_PressedColor: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
-    m_SelectedColor: {r: 0.59607846, g: 0.59607846, b: 0.59607846, a: 0}
+    m_HighlightedColor: {r: 1, g: 0, b: 0, a: 1}
+    m_PressedColor: {r: 1, g: 0, b: 0, a: 1}
+    m_SelectedColor: {r: 1, g: 0, b: 0, a: 0}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -4858,6 +4895,7 @@ GameObject:
   - component: {fileID: 1891471623}
   - component: {fileID: 1891471622}
   - component: {fileID: 1891471621}
+  - component: {fileID: 1891471624}
   m_Layer: 5
   m_Name: RunButton
   m_TagString: Untagged
@@ -5008,6 +5046,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1891471619}
   m_CullTransparentMesh: 0
+--- !u!114 &1891471624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891471619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd95d3e3ac1658e40ab9d7867f010c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonTL: {fileID: 1039938643}
+  buttonTR: {fileID: 1347847105}
+  buttonBL: {fileID: 0}
+  buttonBR: {fileID: 0}
 --- !u!1 &1941314873
 GameObject:
   m_ObjectHideFlags: 0
@@ -5694,6 +5748,7 @@ GameObject:
   - component: {fileID: 2092424527}
   - component: {fileID: 2092424526}
   - component: {fileID: 2092424525}
+  - component: {fileID: 2092424528}
   m_Layer: 5
   m_Name: FightButton
   m_TagString: Untagged
@@ -5844,6 +5899,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2092424523}
   m_CullTransparentMesh: 0
+--- !u!114 &2092424528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092424523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd95d3e3ac1658e40ab9d7867f010c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonTL: {fileID: 867792556}
+  buttonTR: {fileID: 1142951442}
+  buttonBL: {fileID: 0}
+  buttonBR: {fileID: 0}
 --- !u!1 &2093078928
 GameObject:
   m_ObjectHideFlags: 0
