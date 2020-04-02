@@ -46,6 +46,8 @@ public class PlatformingMovement : MonoBehaviour
 
 	public bool sword_enabled;
 
+	AudioSource[] sounds;
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -63,6 +65,8 @@ public class PlatformingMovement : MonoBehaviour
 		health_background_texture.SetPixel(0, 0, Color.black);
 		health_background_texture.Apply();
 		health_background_style.normal.background = health_background_texture;
+
+		sounds = GetComponents<AudioSource>();
 	}
 
     // Update is called once per frame
@@ -107,6 +111,8 @@ public class PlatformingMovement : MonoBehaviour
 		{
 			attack_timer = 0;
 			sword.transform.localEulerAngles = new Vector3(0, 0, 75);
+			sounds[1].pitch = Random.Range(0.8f, 1.2f);
+			sounds[1].Play();
 			if (facing_right)
 			{
 				if (hit_right_upper.collider != null && hit_right_upper.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
@@ -174,6 +180,7 @@ public class PlatformingMovement : MonoBehaviour
 			{
 				frame_timer = 0;
 				frame = (frame + 1) % 4;
+				if (frame % 2 == 0 && hit_down.collider != null) { sounds[0].pitch = Random.Range(0.8f, 1.2f); sounds[0].Play(); }
 			}
 		}
 		else
@@ -218,6 +225,8 @@ public class PlatformingMovement : MonoBehaviour
 		if (sword_enabled && block_timer < 0.75f * block_frequency && ((direction.x < 0 && facing_right) || (direction.x > 0 && !facing_right)))
 		{
 			rb.velocity += (3 * amount * new Vector2(direction.x, 0));
+			sounds[2].pitch = Random.Range(0.8f, 1.2f);
+			sounds[2].Play();
 		}
 		else
 		{

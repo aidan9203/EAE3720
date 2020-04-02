@@ -32,6 +32,8 @@ public class TopDownMovement : MonoBehaviour
     int input_horizontal = 0;
     int input_vertical = 0;
 
+    AudioSource sound_footstep;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +52,8 @@ public class TopDownMovement : MonoBehaviour
                 o.transform.position = new Vector3(o.transform.position.x, o.transform.position.y, o.transform.position.y);
             }
         }
+
+        sound_footstep = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -104,6 +108,7 @@ public class TopDownMovement : MonoBehaviour
             {
                 frame_timer = 0;
                 frame = (frame + 1) % 4;
+                if (frame % 2 == 0) { sound_footstep.pitch = Random.Range(0.8f, 1.2f); sound_footstep.Play(); }
             }
         }
 
