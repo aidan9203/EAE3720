@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Turn Based/Scene/TurnBasedTest.unity
     guid: 0999ec1f874fc674e9fd32d59fb94691
   - enabled: 1
+    path: Assets/Menu.unity
+    guid: 24989441310bf89418ad00923246dbdb
+  - enabled: 1
     path: Assets/Top Down/Overworld.unity
     guid: b9cf88d528797b04db3e1261b0b123dd
   - enabled: 1
