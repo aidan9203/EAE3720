@@ -11,9 +11,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Platforming/PlatformingTest.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 0
-    path: Assets/Turn Based/Scene/TurnBasedTest.unity
-    guid: 0999ec1f874fc674e9fd32d59fb94691
   - enabled: 1
     path: Assets/Menu.unity
     guid: 24989441310bf89418ad00923246dbdb
@@ -26,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Platforming/Platforming2.unity
     guid: 897c03a08961b2941a41e644e7e4c5e4
+  - enabled: 1
+    path: Assets/Turn Based/Scene/TurnBasedTest.unity
+    guid: 0999ec1f874fc674e9fd32d59fb94691
   m_configObjects: {}

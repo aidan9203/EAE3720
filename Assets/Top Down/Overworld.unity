@@ -1099,6 +1099,7 @@ GameObject:
   - component: {fileID: 168185046}
   - component: {fileID: 168185045}
   - component: {fileID: 168185048}
+  - component: {fileID: 168185049}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -1210,6 +1211,19 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8a95cc8b91e12c64a918138a03c825f3, type: 3}
   - {fileID: 21300000, guid: 6762c3086ee7f254284a7a6384e94ea3, type: 3}
   - {fileID: 21300000, guid: 759a0a4a95d5739409488cb9d8f50d1c, type: 3}
+--- !u!114 &168185049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168185044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3e84eb0701d05f41ba2cd88eb597089, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scene: TurnBasedTest
 --- !u!1001 &168807870
 PrefabInstance:
   m_ObjectHideFlags: 0
