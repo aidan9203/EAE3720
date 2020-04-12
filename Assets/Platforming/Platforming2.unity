@@ -815,6 +815,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 676656237, guid: 529c5cd1428e87d45bcd45e6da83e2e5, type: 3}
+      propertyPath: m_Animation
+      value: 
+      objectReference: {fileID: 7400000, guid: f58ecae05d430434eb719c0662b3e739, type: 2}
+    - target: {fileID: 676656237, guid: 529c5cd1428e87d45bcd45e6da83e2e5, type: 3}
+      propertyPath: m_Animations.Array.data[0]
+      value: 
+      objectReference: {fileID: 7400000, guid: f58ecae05d430434eb719c0662b3e739, type: 2}
     - target: {fileID: 510625007319526331, guid: 529c5cd1428e87d45bcd45e6da83e2e5,
         type: 3}
       propertyPath: m_LocalScale.y

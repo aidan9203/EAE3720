@@ -493,6 +493,7 @@ GameObject:
   m_Component:
   - component: {fileID: 510625007319526331}
   - component: {fileID: 2029339384215209507}
+  - component: {fileID: 676656237}
   m_Layer: 0
   m_Name: Player_Platforming_Sword
   m_TagString: Untagged
@@ -508,7 +509,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5222289469035417243}
   m_LocalRotation: {x: 0.38268343, y: -0.92387956, z: 0.00000007165881, w: -0.00000017299969}
-  m_LocalPosition: {x: -0.098, y: -0.001, z: -1}
+  m_LocalPosition: {x: -0.056, y: -0.046, z: -1}
   m_LocalScale: {x: 0.5, y: 0.75, z: 1}
   m_Children: []
   m_Father: {fileID: 4075026072499041050}
@@ -563,3 +564,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!111 &676656237
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5222289469035417243}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 30a42de34e373e749aa61d12335f60cc, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 30a42de34e373e749aa61d12335f60cc, type: 2}
+  - {fileID: 7400000, guid: 71a394e6f72f51b4caf74342d19f8fdd, type: 2}
+  - {fileID: 7400000, guid: 500c79458f2acad478b7bfc5a63e6377, type: 2}
+  m_WrapMode: 1
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0

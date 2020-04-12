@@ -11,6 +11,7 @@ public class PlatformingMovement : MonoBehaviour
 	public float max_velocity;
 
 	public GameObject sword;
+	Animation sword_animations;
 
 	public int max_hp;
     public int hp;
@@ -21,6 +22,7 @@ public class PlatformingMovement : MonoBehaviour
 
 	float attack_timer = 10;
 	float block_timer = 10;
+	bool blocked = false;
 
 	public string death_scene;
 
@@ -67,6 +69,7 @@ public class PlatformingMovement : MonoBehaviour
 		health_background_style.normal.background = health_background_texture;
 
 		sounds = GetComponents<AudioSource>();
+		sword_animations = sword.GetComponent<Animation>();
 	}
 
     // Update is called once per frame
@@ -81,7 +84,11 @@ public class PlatformingMovement : MonoBehaviour
 
 		attack_timer += Time.deltaTime;
 		block_timer += Time.deltaTime;
-		if (block_timer > 0.75f * block_frequency && attack_timer > attack_frequency / 2.0f) { sword.transform.localEulerAngles = new Vector3(0, 0, 45); }
+		if (blocked && block_timer > 0.75f * block_frequency)
+		{
+			blocked = false;
+			sword_animations.Play("Unblock");
+		}
 
 		//Read inputs
 		float input_horizontal = Input.GetAxisRaw("Horizontal");
@@ -110,7 +117,7 @@ public class PlatformingMovement : MonoBehaviour
 		if (sword_enabled && Input.GetAxisRaw("Attack/Block") > 0 && attack_timer > attack_frequency && block_timer > block_frequency)
 		{
 			attack_timer = 0;
-			sword.transform.localEulerAngles = new Vector3(0, 0, 75);
+			sword_animations.Play("Attack");
 			sounds[1].pitch = Random.Range(0.8f, 1.2f);
 			sounds[1].Play();
 			if (facing_right)
@@ -139,7 +146,8 @@ public class PlatformingMovement : MonoBehaviour
 		else if (sword_enabled && Input.GetAxisRaw("Attack/Block") < 0 && block_timer > block_frequency && attack_timer > attack_frequency)
 		{
 			block_timer = 0;
-			sword.transform.localEulerAngles = new Vector3(0, 0, 15);
+			blocked = true;
+			sword_animations.Play("Block");
 		}
 
 		//Apply movement
