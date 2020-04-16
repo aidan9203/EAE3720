@@ -899,6 +899,28 @@ PrefabInstance:
       propertyPath: sword_enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4075026071822770743, guid: 529c5cd1428e87d45bcd45e6da83e2e5,
+        type: 3}
+      propertyPath: attack_start
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 4075026071822770743, guid: 529c5cd1428e87d45bcd45e6da83e2e5,
+        type: 3}
+      propertyPath: attack_end
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 4075026071822770743, guid: 529c5cd1428e87d45bcd45e6da83e2e5,
+        type: 3}
+      propertyPath: sword_block
+      value: 
+      objectReference: {fileID: 21300000, guid: a317b15948518874988bc88f33e77e30,
+        type: 3}
+    - target: {fileID: 4075026071822770743, guid: 529c5cd1428e87d45bcd45e6da83e2e5,
+        type: 3}
+      propertyPath: sword_swing
+      value: 
+      objectReference: {fileID: 21300000, guid: b1937fa5165229d40ae2e94c76233d92,
+        type: 3}
     - target: {fileID: 4075026072499041125, guid: 529c5cd1428e87d45bcd45e6da83e2e5,
         type: 3}
       propertyPath: m_Color.r

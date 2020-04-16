@@ -67,6 +67,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c78ec7493a9f73b4d8e202ed35eb5205, type: 3}
   - {fileID: 21300000, guid: 9a72eb6f9b1df544fbdea06d6e76b8b8, type: 3}
   sword_enabled: 0
+  sword_swing: {fileID: 21300000, guid: 7862ccdbbcd41b64eaffa144e1ce935b, type: 3}
+  sword_block: {fileID: 21300000, guid: 264f3e752fa1d0d44b3ade1e7d225a9c, type: 3}
+  attack_start: 0
+  attack_end: 0.02
 --- !u!61 &4075026071822770740
 BoxCollider2D:
   m_ObjectHideFlags: 0

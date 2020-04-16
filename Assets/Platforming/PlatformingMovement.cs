@@ -50,6 +50,11 @@ public class PlatformingMovement : MonoBehaviour
 
 	AudioSource[] sounds;
 
+	public Sprite sword_swing, sword_block;
+	Sprite sword_rest;
+	public float attack_start, attack_end;
+	SpriteRenderer sword_sprite;
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -70,11 +75,28 @@ public class PlatformingMovement : MonoBehaviour
 
 		sounds = GetComponents<AudioSource>();
 		sword_animations = sword.GetComponent<Animation>();
+		sword_sprite = sword.GetComponent<SpriteRenderer>();
+		sword_rest = sword_sprite.sprite;
 	}
 
     // Update is called once per frame
     void Update()
     {
+		//Sword sprite changes
+		if (attack_timer > attack_start && attack_timer < attack_end)
+		{
+			sword_sprite.sprite = sword_swing;
+		}
+		else if (block_timer > 0 && block_timer < 0.75f * block_frequency)
+		{
+			sword_sprite.sprite = sword_block;
+		}
+		else
+		{
+			sword_sprite.sprite = sword_rest;
+		}
+
+
 		sprite.color = new Color(Mathf.Min(255, sprite.color.r) + 10 * Time.deltaTime, Mathf.Min(255, sprite.color.g + 10 * Time.deltaTime), Mathf.Min(255, sprite.color.b + 10 * Time.deltaTime));
 		if (hp <= 0)
 		{
