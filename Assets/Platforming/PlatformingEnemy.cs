@@ -37,8 +37,10 @@ public class PlatformingEnemy : MonoBehaviour
 	SpriteRenderer sprite;
 
 	public Sprite[] sprites = new Sprite[4];
+	public Sprite sprite_attack;
 	int frame = 0;
 	float frame_timer = 0;
+	float attack_wait = -1;
 
 	Vector3 scale_initial;
 
@@ -73,6 +75,7 @@ public class PlatformingEnemy : MonoBehaviour
 
 		sprite.color = new Color(Mathf.Min(255, sprite.color.r) + 10 * Time.deltaTime, Mathf.Min(255, sprite.color.g + 10 * Time.deltaTime), Mathf.Min(255, sprite.color.b + 10 * Time.deltaTime));
 		attack_timer += Time.deltaTime;
+		attack_wait -= Time.deltaTime;
 
 		Vector2 waypoint_direction;
 
@@ -125,7 +128,13 @@ public class PlatformingEnemy : MonoBehaviour
 				//Attacking the player
 				if (attack_timer > attack_frequency)
 				{
+					sprite.sprite = sprite_attack;
+					attack_wait = 0.2f;
 					attack_timer = 0;
+				}
+				else if (attack_wait < 0 && attack_wait > -1)
+				{
+					attack_wait = -1;
 					hit_forward_upper.collider.GetComponent<PlatformingMovement>().Damage(damage, (player.position - tf.position).normalized, knockback);
 				}
 			}
@@ -142,7 +151,13 @@ public class PlatformingEnemy : MonoBehaviour
 				//Attacking the player
 				if (attack_timer > attack_frequency)
 				{
+					sprite.sprite = sprite_attack;
+					attack_wait = 0.2f;
 					attack_timer = 0;
+				}
+				else if (attack_wait < 0 && attack_wait > -1)
+				{
+					attack_wait = -1;
 					hit_forward_lower.collider.GetComponent<PlatformingMovement>().Damage(damage, (player.position - tf.position).normalized, knockback);
 				}
 			}
@@ -181,7 +196,10 @@ public class PlatformingEnemy : MonoBehaviour
 			if (frame == 1) { frame = 2; }
 			else if (frame == 3) { frame = 0; }
 		}
-		sprite.sprite = sprites[frame];
+		if (attack_wait < -1)
+		{
+			sprite.sprite = sprites[frame];
+		}
 	}
 
 

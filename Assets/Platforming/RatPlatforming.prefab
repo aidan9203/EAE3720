@@ -113,6 +113,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: df595817b94765442b62b3944a58a387, type: 3}
   - {fileID: 21300000, guid: 5c069865a04daa142baeeae4ca3f5851, type: 3}
   - {fileID: 21300000, guid: ea9254245d09fcf408c1494c821c40fe, type: 3}
+  sprite_attack: {fileID: 21300000, guid: 0bffc676bd42e714397c3ed6dedf1dd6, type: 3}
   death_scene: 
   fade: {fileID: 0}
   death_prefab: {fileID: 6167963731653036774, guid: 1f3e3d5cd75fe1d4a9e8801fb1a94c88,
