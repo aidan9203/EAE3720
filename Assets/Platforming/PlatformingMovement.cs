@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlatformingMovement : MonoBehaviour
 {
@@ -55,6 +56,10 @@ public class PlatformingMovement : MonoBehaviour
 	public float attack_start, attack_end;
 	SpriteRenderer sword_sprite;
 
+	public GameObject fade;
+	bool started;
+	bool queue_end;
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -77,11 +82,30 @@ public class PlatformingMovement : MonoBehaviour
 		sword_animations = sword.GetComponent<Animation>();
 		sword_sprite = sword.GetComponent<SpriteRenderer>();
 		sword_rest = sword_sprite.sprite;
+
+		started = true;
 	}
 
     // Update is called once per frame
     void Update()
     {
+		if (started)
+		{
+			fade.GetComponent<Image>().color = new Vector4(0, 0, 0, fade.GetComponent<Image>().color.a - 5 * Time.deltaTime);
+			if (fade.GetComponent<Image>().color.a <= 0)
+			{
+				started = false;
+			}
+		}
+		else if (queue_end)
+		{
+			fade.GetComponent<Image>().color = new Vector4(0, 0, 0, fade.GetComponent<Image>().color.a + 5 * Time.deltaTime);
+			if (fade.GetComponent<Image>().color.a >= 1)
+			{
+				SceneManager.LoadScene(death_scene);
+			}
+		}
+
 		//Sword sprite changes
 		if (attack_timer > attack_start && attack_timer < attack_end)
 		{
@@ -101,7 +125,7 @@ public class PlatformingMovement : MonoBehaviour
 		if (hp <= 0)
 		{
 			Controller.died = true;
-			SceneManager.LoadScene(death_scene);
+			queue_end = true;
 		}
 
 		attack_timer += Time.deltaTime;

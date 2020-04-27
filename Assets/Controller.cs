@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Controller : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class Controller : MonoBehaviour
     List<string> objects = new List<string>();
     string lastObject;
 
+    bool queue_end, started;
+    string queued_scene = "";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,12 +25,35 @@ public class Controller : MonoBehaviour
         startPos = GameObject.Find("Player").transform.position;
         lastPos = startPos;
         died = false;
+
+        queue_end = false;
+        started = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (SceneManager.GetActiveScene().name == "Overworld")
+        {
+            GameObject fade = GameObject.Find("Fade");
+            if (started)
+            {
+                fade.GetComponent<Image>().color = new Vector4(0, 0, 0, fade.GetComponent<Image>().color.a - 5 * Time.deltaTime);
+                if (fade.GetComponent<Image>().color.a <= 0)
+                {
+                    started = false;
+                }
+            }
+            else if (queue_end)
+            {
+                GameObject.Find("Fade").GetComponent<Image>().color = new Vector4(0, 0, 0, fade.GetComponent<Image>().color.a + 5 * Time.deltaTime);
+                if (fade.GetComponent<Image>().color.a >= 1)
+                {
+                    SceneManager.LoadScene(queued_scene);
+                    started = true;
+                }
+            }
+        }
     }
 
 
@@ -65,6 +92,7 @@ public class Controller : MonoBehaviour
         lastPos = GameObject.Find("Player").transform.position;
         lastObject = trigger.name;
         GameObject.Find(lastObject).SetActive(false);
-        SceneManager.LoadScene(name);
+        queued_scene = name;
+        queue_end = true;
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlatformingEnemy : MonoBehaviour
 {
@@ -42,6 +43,8 @@ public class PlatformingEnemy : MonoBehaviour
 	Vector3 scale_initial;
 
 	public string death_scene = "";
+	public GameObject fade;
+	bool queue_end;
 
 	public GameObject death_prefab;
 
@@ -53,11 +56,21 @@ public class PlatformingEnemy : MonoBehaviour
 		scale_initial = GetComponent<Transform>().localScale;
 		sprite = tf.GetChild(0).GetComponent<SpriteRenderer>();
 		waypoint = FindClosestWaypoint(false);
+		queue_end = false;
 	}
 
     // Update is called once per frame
     void Update()
     {
+		if (queue_end)
+		{
+			fade.GetComponent<Image>().color = new Vector4(0, 0, 0, fade.GetComponent<Image>().color.a + 5 * Time.deltaTime);
+			if (fade.GetComponent<Image>().color.a >= 1)
+			{
+				SceneManager.LoadScene(death_scene);
+			}
+		}
+
 		sprite.color = new Color(Mathf.Min(255, sprite.color.r) + 10 * Time.deltaTime, Mathf.Min(255, sprite.color.g + 10 * Time.deltaTime), Mathf.Min(255, sprite.color.b + 10 * Time.deltaTime));
 		attack_timer += Time.deltaTime;
 
@@ -270,11 +283,19 @@ public class PlatformingEnemy : MonoBehaviour
 		rb.velocity += (10 * amount * new Vector2(direction.x, 0)) + new Vector2(0, 1.0f);
 		if (hp <= 0)
 		{
-			if (death_scene != "") { SceneManager.LoadScene(death_scene); }
 			GameObject body = GameObject.Instantiate(death_prefab);
 			body.transform.position = transform.position;
 			body.transform.localScale = transform.localScale;
-			GameObject.Destroy(this.gameObject);
+
+			if (death_scene != "")
+			{
+				queue_end = true;
+				transform.GetChild(0).gameObject.SetActive(false);
+			}
+			else
+			{
+				GameObject.Destroy(this.gameObject);
+			}
 		}
 	}
 }
