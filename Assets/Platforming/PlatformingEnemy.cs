@@ -50,6 +50,8 @@ public class PlatformingEnemy : MonoBehaviour
 
 	public GameObject death_prefab;
 
+	public GameObject projectile;
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -169,6 +171,27 @@ public class PlatformingEnemy : MonoBehaviour
 		}
 		else
 		{
+			if (player_engaged && projectile != null)
+			{
+				if (attack_timer > attack_frequency)
+				{
+					sprite.sprite = sprite_attack;
+					attack_wait = 0.2f;
+					attack_timer = 0;
+				}
+				else if (attack_wait < 0 && attack_wait > -1)
+				{
+					attack_wait = -1;
+					if (facing_right)
+					{
+						GameObject.Instantiate(projectile, transform.position, Quaternion.Euler(0, 0, -60));
+					}
+					else
+					{
+						GameObject.Instantiate(projectile, transform.position, Quaternion.Euler(0, 0, 60));
+					}
+				}
+			}
 			//Apply forward motion
 			if (Mathf.Abs(waypoint_direction.x) < waypoint_min_distance - 0.1f && Mathf.Abs(waypoint_direction.y) < waypoint_min_distance - 0.1f)
 			{

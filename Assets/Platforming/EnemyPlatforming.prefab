@@ -118,6 +118,8 @@ MonoBehaviour:
   fade: {fileID: 0}
   death_prefab: {fileID: 5461936410793145343, guid: bb2cab7aae891dd4aa940e8634cd58ce,
     type: 3}
+  projectile: {fileID: 1814608663245367016, guid: 78a651a545bc202468f374ba541ecfc2,
+    type: 3}
 --- !u!1 &6211110042001837730
 GameObject:
   m_ObjectHideFlags: 0
