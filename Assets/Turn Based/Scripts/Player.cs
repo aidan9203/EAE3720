@@ -98,13 +98,9 @@ public class Player : MonoBehaviour
                 submenu = selectedButton.GetComponent<ButtonSubmenu>();
                 subSelectedButton = submenu.buttonTL;
                 EventSystem.current.SetSelectedGameObject(null);
-                StartCoroutine(SelectButtonLater(subSelectedButton));
-            }
-        }
+                subSelectedButton.Select();
 
-        else
-        {
-            selectedButton.onClick.Invoke();
+            }
         }
 
 
@@ -202,10 +198,10 @@ public class Player : MonoBehaviour
         playerTurn = true;
     }
 
-    private IEnumerator SelectButtonLater(Button button)
-    {
-        yield return null;
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(button.gameObject);
-    }
+    //private IEnumerator SelectButtonLater(Button button)
+    //{
+    //    yield return null;
+    //    EventSystem.current.SetSelectedGameObject(null);
+    //    EventSystem.current.SetSelectedGameObject(button.gameObject);
+    //}
 }
