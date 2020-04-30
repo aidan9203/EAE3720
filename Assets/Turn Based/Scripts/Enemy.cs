@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
 
     public GameObject player;
 
-    public GameObject healthCounter;
+    //public GameObject healthCounter;
 
     public Image healthBarRed;
 
@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour
     private float currentHealth = 0f;
 
     private int[] moveList = {20, 30, 40, 50};
+
+    private string[] moveNameList = { "twent", "thirt", "fourt", "fift" };
 
     private bool enemyTurn = false;
 
@@ -34,8 +36,8 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         currentHealth = initialHealth;
-        TextMeshProUGUI healthText = healthCounter.GetComponent<TextMeshProUGUI>();
-        healthText.SetText(currentHealth.ToString());
+        //TextMeshProUGUI healthText = healthCounter.GetComponent<TextMeshProUGUI>();
+        //healthText.SetText(currentHealth.ToString());
         healthBar.preserveAspect = false;
 
         
@@ -51,7 +53,14 @@ public class Enemy : MonoBehaviour
 
         if (enemyTurn)
         {
-            damageDealt = moveList[rand.Next(0, moveList.Length)];
+            int moveIndex = rand.Next(0, moveList.Length);
+            damageDealt = moveList[moveIndex];
+            string moveName = moveNameList[moveIndex];
+            ArrayList stuff = new ArrayList();
+            stuff.Add(moveName);
+            stuff.Add(damageDealt);
+            stuff.Add(2);
+            player.SendMessage("BattleLogArray", stuff);
             player.SendMessage("TakeDamage", damageDealt);
             player.SendMessage("ActivateTurn");
             enemyTurn = false;
@@ -86,8 +95,8 @@ public class Enemy : MonoBehaviour
             currentHealth -= damage;
         }
 
-        TextMeshProUGUI healthText = healthCounter.GetComponent<TextMeshProUGUI>();
-        healthText.SetText(currentHealth.ToString());
+        //TextMeshProUGUI healthText = healthCounter.GetComponent<TextMeshProUGUI>();
+        //healthText.SetText(currentHealth.ToString());
         float newWidth = (390f * (currentHealth / initialHealth));
         healthBar.rectTransform.sizeDelta = new Vector2(newWidth, 39.9f);
         
@@ -99,11 +108,16 @@ public class Enemy : MonoBehaviour
 
     private void ActivateTurn()
     {
-        enemyTurn = true;
+        Invoke("turnStart", 1.5f);
     }
 
     private void HealthSubtracterCall()
     {
         healthSubtractor = true;
+    }
+
+    private void turnStart()
+    {
+        enemyTurn = true;
     }
 }
