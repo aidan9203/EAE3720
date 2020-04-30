@@ -47,6 +47,8 @@ public class Player : MonoBehaviour
 
     private ButtonSubmenu submenu = null;
 
+    private Image subButtonImage = null;
+
     bool actionMenu = false;
 
     // Start is called before the first frame update
@@ -67,13 +69,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //Debug.Log(EventSystem.current.currentSelectedGameObject);
+
         if (currentHealth <= 0)
         {
             Destroy(this.gameObject);
         }
-
-        Debug.Log(EventSystem.current.currentSelectedGameObject);
         
         if (actionMenu)
         {
@@ -91,7 +92,7 @@ public class Player : MonoBehaviour
                 selectedButton.Select();
             }
 
-            else if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Z))
+            else if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Return))
             {
                 selectedButton.onClick.Invoke();
                 actionMenu = false;
@@ -99,9 +100,132 @@ public class Player : MonoBehaviour
                 subSelectedButton = submenu.buttonTL;
                 EventSystem.current.SetSelectedGameObject(null);
                 subSelectedButton.Select();
+                Image buttonImage = subSelectedButton.GetComponent<Image>();
+                buttonImage.color = new Color(1f, 1f, 1f, 1f);
 
             }
         }
+        //Image buttonImage = selectedButton.GetComponent<Image>();
+        //buttonImage.color = (Color.gray);
+        else
+        {
+            if ((Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)))
+            {
+                if (subSelectedButton.Equals(submenu.buttonTL))
+                {
+                    if (submenu.buttonBL != null)
+                    {
+                        subButtonImage = subSelectedButton.GetComponent<Image>();
+                        subButtonImage.color = new Color(1f, 1f, 1f, 0f);
+                        subSelectedButton = submenu.buttonBL;
+                    }
+                }
+
+                else if (subSelectedButton.Equals(submenu.buttonTR))
+                {
+                    if (submenu.buttonBR != null)
+                    {
+                        subButtonImage = subSelectedButton.GetComponent<Image>();
+                        subButtonImage.color = new Color(1f, 1f, 1f, 0f);
+                        subSelectedButton = submenu.buttonBR;
+                    }
+                }
+            }
+
+            if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)))
+            {
+                if (subSelectedButton.Equals(submenu.buttonBL))
+                {
+                    if (submenu.buttonTL != null)
+                    {
+                        subButtonImage = subSelectedButton.GetComponent<Image>();
+                        subButtonImage.color = new Color(1f, 1f, 1f, 0f);
+                        subSelectedButton = submenu.buttonTL;
+                    }
+                }
+                else if (subSelectedButton.Equals(submenu.buttonBR))
+                {
+                    if (submenu.buttonTR != null)
+                    {
+                        subButtonImage = subSelectedButton.GetComponent<Image>();
+                        subButtonImage.color = new Color(1f, 1f, 1f, 0f);
+                        subSelectedButton = submenu.buttonTR;
+                    }
+                }
+            }
+
+            if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)))
+            {
+                if (subSelectedButton.Equals(submenu.buttonBR))
+                {
+                    if (submenu.buttonBL != null)
+                    {
+                        subButtonImage = subSelectedButton.GetComponent<Image>();
+                        subButtonImage.color = new Color(1f, 1f, 1f, 0f);
+                        subSelectedButton = submenu.buttonBL;
+                    }
+                }
+
+                else if (subSelectedButton.Equals(submenu.buttonTR))
+                {
+                    if (submenu.buttonTL != null)
+                    {
+                        subButtonImage = subSelectedButton.GetComponent<Image>();
+                        subButtonImage.color = new Color(1f, 1f, 1f, 0f);
+                        subSelectedButton = submenu.buttonTL;
+                    }
+                }
+            }
+
+            if ((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)))
+            {
+                if (subSelectedButton.Equals(submenu.buttonBL))
+                {
+                    if (submenu.buttonBR != null)
+                    {
+                        subButtonImage = subSelectedButton.GetComponent<Image>();
+                        subButtonImage.color = new Color(1f, 1f, 1f, 0f);
+                        subSelectedButton = submenu.buttonBR;
+                    }
+                }
+
+                else if (subSelectedButton.Equals(submenu.buttonTL))
+                {
+                    if (submenu.buttonTR != null)
+                    {
+                        subButtonImage = subSelectedButton.GetComponent<Image>();
+                        subButtonImage.color = new Color(1f, 1f, 1f, 0f);
+                        subSelectedButton = submenu.buttonTR;
+                    }
+                }
+            }
+
+            subButtonImage = subSelectedButton.GetComponent<Image>();
+            subButtonImage.color = new Color(1f, 1f, 1f, 1f);
+            subSelectedButton.Select();
+
+            if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Return))
+            {
+                subSelectedButton.onClick.Invoke();
+                subButtonImage = subSelectedButton.GetComponent<Image>();
+                subButtonImage.color = new Color(1f, 1f, 1f, 0f);
+                submenu.panel.SetActive(false);
+                actionMenu = true;
+                selectedButton.Select();
+            }
+            
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                subButtonImage = subSelectedButton.GetComponent<Image>();
+                subButtonImage.color = new Color(1f, 1f, 1f, 0f);
+                submenu.panel.SetActive(false);
+                actionMenu = true;
+                selectedButton.Select();
+            }
+
+
+        }
+
 
 
     }

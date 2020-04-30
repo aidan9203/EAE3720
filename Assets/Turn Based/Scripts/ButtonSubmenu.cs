@@ -13,6 +13,8 @@ public class ButtonSubmenu : MonoBehaviour
 
     public Button buttonBR;
 
+    public GameObject panel;
+
     void Start()
     {
         
