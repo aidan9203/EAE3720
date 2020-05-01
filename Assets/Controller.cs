@@ -50,6 +50,8 @@ public class Controller : MonoBehaviour
                 if (fade.GetComponent<Image>().color.a >= 1)
                 {
                     SceneManager.LoadScene(queued_scene);
+                    queued_scene = "";
+                    queue_end = false;
                     started = true;
                 }
             }
