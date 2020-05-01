@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
@@ -18,9 +19,9 @@ public class Enemy : MonoBehaviour
 
     private float currentHealth = 0f;
 
-    private int[] moveList = {20, 30, 40, 50};
+    private int[] moveList = {30, 50, 70};
 
-    private string[] moveNameList = { "twent", "thirt", "fourt", "fift" };
+    private string[] moveNameList = { "The enemy spews bile", "Your wounds fester", "The enemy infects you"};
 
     private bool enemyTurn = false;
 
@@ -32,6 +33,21 @@ public class Enemy : MonoBehaviour
 
     private bool healthSubtractor = false;
 
+    public GameObject deathPanelHolder;
+
+    private CanvasGroup deathPanel = null;
+
+    public TextMeshProUGUI deathText;
+
+    private bool deathMode = false;
+
+    private bool ded = false;
+
+    public AudioClip sound;
+
+    private Button button { get { return GetComponent<Button>(); } }
+    private AudioSource source { get { return GetComponent<AudioSource>(); } }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,18 +55,37 @@ public class Enemy : MonoBehaviour
         //TextMeshProUGUI healthText = healthCounter.GetComponent<TextMeshProUGUI>();
         //healthText.SetText(currentHealth.ToString());
         healthBar.preserveAspect = false;
+        deathPanel = deathPanelHolder.GetComponent<CanvasGroup>();
+        gameObject.AddComponent<AudioSource>();
+        source.clip = sound;
+        source.playOnAwake = false;
 
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (currentHealth <= 0)
+        /*if (currentHealth <= 0)
         {
             Destroy(this.gameObject);
-        }
+        }*/
 
+         if (deathMode)
+        {
+            if (deathPanel.alpha < 1)
+            {
+                deathPanel.alpha += 0.02f;
+            }
+
+            else if (ded == false)
+            {
+                ded = true;
+                deathText.SetText("YOU WIN! <br> <br> Aidan <br> Bryetan <br> Parimal <br> Wyatt");
+                Invoke("gameQuitter", 6f);
+            }
+            
+        }
+        
         if (enemyTurn)
         {
             int moveIndex = rand.Next(0, moveList.Length);
@@ -88,13 +123,14 @@ public class Enemy : MonoBehaviour
     {
         if (currentHealth - damage <= 0)
         {
+            damage = (int) currentHealth;
             currentHealth = 0;
         }
         else
         {
             currentHealth -= damage;
         }
-
+        PlaySound();
         //TextMeshProUGUI healthText = healthCounter.GetComponent<TextMeshProUGUI>();
         //healthText.SetText(currentHealth.ToString());
         float newWidth = (390f * (currentHealth / initialHealth));
@@ -108,7 +144,16 @@ public class Enemy : MonoBehaviour
 
     private void ActivateTurn()
     {
-        Invoke("turnStart", 1.5f);
+        if (currentHealth <= 0)
+        {
+            Invoke("deathScreen", 2f);
+        }
+
+        else
+        {
+            Invoke("turnStart", 1.5f);
+        }
+        
     }
 
     private void HealthSubtracterCall()
@@ -119,5 +164,20 @@ public class Enemy : MonoBehaviour
     private void turnStart()
     {
         enemyTurn = true;
+    }
+
+    private void deathScreen()
+    {
+        deathMode = true;
+    }
+
+    private void gameQuitter()
+    {
+        Application.Quit();
+    }
+
+    private void PlaySound()
+    {
+        source.PlayOneShot(sound);
     }
 }

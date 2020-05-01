@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -24,10 +25,6 @@ public class Player : MonoBehaviour
     public float initialHealth = 300f;
 
     public GameObject enemy;
-
-    private int ammoCount = 16;
-
-    private int grenadeCount = 2;
 
     private float currentHealth = 0;
 
@@ -76,6 +73,22 @@ public class Player : MonoBehaviour
 
     public GameObject battlePanel;
 
+    public GameObject deathPanelHolder;
+
+    private CanvasGroup deathPanel = null;
+
+    public TextMeshProUGUI deathText;
+
+    private bool deathMode = false;
+
+    private bool ded = false;
+
+    public AudioClip sound;
+
+    private Button button { get { return GetComponent<Button>(); } }
+    private AudioSource source { get { return GetComponent<AudioSource>(); } }
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -98,6 +111,13 @@ public class Player : MonoBehaviour
         battleLog.Add(text8);
         battleLog.Add(text9);
         battleLog.Add(text10);
+        deathPanel = deathPanelHolder.GetComponent<CanvasGroup>();
+
+
+        gameObject.AddComponent<AudioSource>();
+        source.clip = sound;
+        source.playOnAwake = false;
+
 
     }
 
@@ -107,10 +127,10 @@ public class Player : MonoBehaviour
         //Debug.Log(EventSystem.current.currentSelectedGameObject);
 
         
-        if (currentHealth <= 0)
+        /*if (currentHealth <= 0)
         {
             Destroy(this.gameObject);
-        }
+        }*/
 
         if (redHealthChange > 0f & healthSubtractor)
         {
@@ -125,6 +145,22 @@ public class Player : MonoBehaviour
         else
         {
             healthSubtractor = false;
+        }
+
+        if (deathMode)
+        {
+            if (deathPanel.alpha < 1)
+            {
+                deathPanel.alpha += 0.02f;
+            }
+
+            else if (ded == false)
+            {
+                ded = true;
+                deathText.SetText("YOU DIED");
+                Invoke("sceneReloader", 2f);
+            }
+            
         }
 
         if (actionMenu & playerTurn)
@@ -285,7 +321,7 @@ public class Player : MonoBehaviour
     {
         if (playerTurn)
         {
-            damageDealt = 30;
+            damageDealt = 10;
             BattleLogger("Punch", damageDealt, 1);
             enemy.SendMessage("TakeDamage", damageDealt);
             enemy.SendMessage("ActivateTurn");
@@ -299,7 +335,7 @@ public class Player : MonoBehaviour
     {
         if (playerTurn)
         {
-            damageDealt = 50;
+            damageDealt = 15;
             BattleLogger("Kick", damageDealt, 1);
             enemy.SendMessage("TakeDamage", damageDealt);
             enemy.SendMessage("ActivateTurn");
@@ -310,50 +346,106 @@ public class Player : MonoBehaviour
 
     public void shootAttack()
     {
-        if (playerTurn && ammoCount >= 1)
+        if (playerTurn)
         {
-            damageDealt = 80;
-            ammoCount -= 1;
-            TextMeshProUGUI ammoText = ammoCountText.GetComponent <TextMeshProUGUI>();
-            ammoText.SetText("AMMO: " + ammoCount.ToString());
+            damageDealt = 5;
+            BattleLogger("Leeches", damageDealt, 1);
             enemy.SendMessage("TakeDamage", damageDealt);
             enemy.SendMessage("ActivateTurn");
             playerTurn = false;
+            buttonDisable();
         }
     }
 
     public void sprayAttack()
     {
-        if (playerTurn && ammoCount >= 5)
+        if (playerTurn)
         {
-            damageDealt = 0;
-            int hits = rand.Next(1, 6);
-            int count = 0;
-            while (count <= hits)
-            {
-                damageDealt += 50;
-                count += 1;
-            }
-            ammoCount -= 5;
-            TextMeshProUGUI ammoText = ammoCountText.GetComponent<TextMeshProUGUI>();
-            ammoText.SetText("AMMO: " + ammoCount.ToString());
+            damageDealt = 40;
+            BattleLogger("Penicillin", damageDealt, 1);
             enemy.SendMessage("TakeDamage", damageDealt);
             enemy.SendMessage("ActivateTurn");
             playerTurn = false;
+            buttonDisable();
+        }
+    }
+
+    public void vaxAttack()
+    {
+        if (playerTurn)
+        {
+            damageDealt = 60;
+            BattleLogger("Vaccinate", damageDealt, 1);
+            enemy.SendMessage("TakeDamage", damageDealt);
+            enemy.SendMessage("ActivateTurn");
+            playerTurn = false;
+            buttonDisable();
         }
     }
 
     public void grenadeAttack()
     {
-        if (playerTurn && grenadeCount >= 1)
+        if (playerTurn)
         {
-            damageDealt = 100;
-            grenadeCount -= 1;
-            TextMeshProUGUI grenadeText = grenadeCountText.GetComponent<TextMeshProUGUI>();
-            grenadeText.SetText(ammoCount.ToString());
-            enemy.SendMessage("TakeDamage", damageDealt);
+            BattleLoggerSpecial(1);
+            if (currentHealth <= initialHealth - 5)
+            {
+                currentHealth += 5;
+            }
+            else
+            {
+                currentHealth = initialHealth;
+            }
+            float newWidth = (390f * (currentHealth / initialHealth));
+            healthBar.rectTransform.sizeDelta = new Vector2(newWidth, 39.9f);
             enemy.SendMessage("ActivateTurn");
             playerTurn = false;
+            buttonDisable();
+        }
+    }
+
+    public void firstaid()
+    {
+        if (playerTurn)
+
+        {
+            if (currentHealth <= initialHealth - 50)
+            {
+                currentHealth += 50;
+            }
+            else
+            {
+                currentHealth = initialHealth;
+            }
+            float newWidth = (390f * (currentHealth / initialHealth));
+            healthBar.rectTransform.sizeDelta = new Vector2(newWidth, 39.9f);
+            BattleLoggerSpecial(2);
+            enemy.SendMessage("ActivateTurn");
+            playerTurn = false;
+            buttonDisable();
+        }
+    }
+
+    public void runyes()
+    {
+        if (playerTurn)
+        {
+            BattleLoggerSpecial(3);
+            playerTurn = false;
+            buttonDisable();
+            enemy.SendMessage("ActivateTurn");
+        }
+    }
+
+    public void runno()
+    {
+        if (playerTurn)
+        {
+            subButtonImage = subSelectedButton.GetComponent<Image>();
+            subButtonImage.color = new Color(1f, 1f, 1f, 0f);
+            submenu.panel.SetActive(false);
+            actionMenu = true;
+            selectedButton.Select();
         }
     }
 
@@ -362,13 +454,14 @@ public class Player : MonoBehaviour
     {
         if (currentHealth - damage <= 0)
         {
+            damage = (int) currentHealth;
             currentHealth = 0;
         }
         else
         {
             currentHealth -= damage;
         }
-
+        PlaySound();
         float newWidth = (390f * (currentHealth / initialHealth));
         healthBar.rectTransform.sizeDelta = new Vector2(newWidth, 39.9f);
 
@@ -383,7 +476,14 @@ public class Player : MonoBehaviour
 
     private void ActivateTurn()
     {
-        Invoke("turnStart", 1.5f);
+        if (currentHealth <= 0)
+        {
+            Invoke("deathScreen", 2f);
+        }
+        else
+        {
+            Invoke("turnStart", 1.5f);
+        }
 
     }
 
@@ -408,6 +508,7 @@ public class Player : MonoBehaviour
         
         if (actor == 1)
         {
+
             if (textPointer <= 9)
             {
                 TextMeshProUGUI battletext = (TextMeshProUGUI)battleLog[textPointer];
@@ -435,7 +536,7 @@ public class Player : MonoBehaviour
             if (textPointer <= 9)
             {
                 TextMeshProUGUI battletext = (TextMeshProUGUI)battleLog[textPointer];
-                battletext.SetText("The enemy used " + move + "! It did " + dmg + " damage!");
+                battletext.SetText(move + "! It did " + dmg + " damage!");
                 textPointer += 1;
             }
 
@@ -450,7 +551,7 @@ public class Player : MonoBehaviour
                     tempCounter += 1;
                 }
                 TextMeshProUGUI battletext = (TextMeshProUGUI)battleLog[9];
-                battletext.SetText("The enemy used " + move + "! It did " + dmg + " damage!");
+                battletext.SetText(move + "! It did " + dmg + " damage!");
             }
         }
     }
@@ -479,6 +580,68 @@ public class Player : MonoBehaviour
         button3.interactable = false;
         button4.interactable = false;
     }
+
+    private void BattleLoggerSpecial (int special)
+    {
+        if (textPointer == 0)
+        {
+            battlePanel.SetActive(true);
+        }
+
+        string textEnter = "";
+
+        if (special == 1)
+        {
+            textEnter = "You used Herbs! You healed 5 damage!"; 
+        }
+
+        if (special == 2)
+        {
+            textEnter = "You used First Aid! You healed 50 damage!";
+        }
+
+        if (special == 3)
+        {
+            textEnter = "You can't run now!";
+        }
+
+        if (textPointer <= 9)
+        {
+            TextMeshProUGUI battletext = (TextMeshProUGUI)battleLog[textPointer];
+            battletext.SetText(textEnter);
+            textPointer += 1;
+        }
+
+        else
+        {
+            int tempCounter = 0;
+            while (tempCounter <= 8)
+            {
+                TextMeshProUGUI battletexttemp = (TextMeshProUGUI)battleLog[tempCounter];
+                TextMeshProUGUI battletexttemp1 = (TextMeshProUGUI)battleLog[tempCounter + 1];
+                battletexttemp.SetText(battletexttemp1.text);
+                tempCounter += 1;
+            }
+            TextMeshProUGUI battletext = (TextMeshProUGUI)battleLog[9];
+            battletext.SetText(textEnter);
+        }
+    }
+
+    private void deathScreen()
+    {
+        deathMode = true;
+    }
+
+    private void sceneReloader()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void PlaySound()
+    {
+        source.PlayOneShot(sound);
+    }
+
 
 
 
